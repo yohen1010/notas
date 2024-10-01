@@ -1,0 +1,17 @@
+Comandos básico para Informix-online:
+Oninit: Iniciar los servicios de la base base de datos. Esto se hace automático cuando se inicia el sistema operativo del servidor.
+Onmode –ky: Detiene los servicios de la base de datos. Esto se hace automático cuando se detienen los servicios del sistema operativo.
+Onstat -g ses: para monitorear el estatus y consumo de recursos de las sesiones de los usuarios en la base datos.
+Onstat -g ses id_session: muestra informacion sobre una sesion en especifico.
+Onstat –g seg: para monitorear los segmentos de memoria virtual.
+Onstat –l: para ver informacion sobre los logical logs. Por ejemplo, si están llenos o si se le hizo backup.
+Onstat –m: para consultar las últimas entradas al log de la  base de datos.
+Onstat -d: permite ver informacion de los dbspaces creados en una instancia de la base de datos, el tamaño, el espacio usado. Tambien en la primera linea muestra la version, el modo (status) y la cantidad de memoria que esta usando la base de datos.
+Onstat -g  sql id_session: muestra informacion sobre las sentencias de sql que se estan ejecutando en ese momento.
+Ontape –a: para sacar back de los logical logs. Esto se debe hacer despues que se hayan finalizado todos los procesos que se corren en el sistema, debido a que los logical logs guardan la información necesaria para dar un roll back en caso de un problema.
+Ontape -s -L 0 -U database_name: Para crear el log de transacciones de la base de datos.
+Ontape -s -L 0: para hacer backup completo de los datos.
+Ontape –r –d datadbs: Para recuperar un backup de los datos.
+Dbexport easybank: para hacer un unload general de todas las tablas del sistema dentro de un dbschema. Para workgroup server hay que añadir: –d datadbs.
+Dbimport easybank: para restaurar un dbexport. Para workgroup server hay que añadir: –d datadbs.
+Onstat -k: para monitorear los bloqueos de tablas
