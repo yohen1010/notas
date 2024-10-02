@@ -15,3 +15,134 @@ Ontape –r –d datadbs: Para recuperar un backup de los datos.
 Dbexport easybank: para hacer un unload general de todas las tablas del sistema dentro de un dbschema. Para workgroup server hay que añadir: –d datadbs.
 Dbimport easybank: para restaurar un dbexport. Para workgroup server hay que añadir: –d datadbs.
 Onstat -k: para monitorear los bloqueos de tablas
+
+
+Recopilación de Comandos de Informix
+Muestra ultimas lineas del online.log:
+
+#onstat -m
+
+
+Ver estado de la DB, muestra dbspaces y espacio de c/u:
+
+#onstat -d
+
+
+Levanta la DB:
+
+#oninit -v
+
+
+Baja la DB preguntando:
+
+#onmode -k  
+
+
+Baja la DB sin preguntar:
+
+#onmode -ky
+
+
+Para gestionar la DB, crea, consulta, dreopea bases y tablas:
+
+#dbaccess    
+
+
+#onmonitor
+
+
+Permite bajar y subir el access plus:
+
+#accplusdb
+
+
+Ver quien esta usando la DB:
+
+#ipcs            
+#ipcrm -q ID Semaforo
+#ipcrm -m ID Memoria
+#ipcrm -s ID Cola
+
+
+Para ver lockeo de tablas:
+
+#onstat -k
+
+
+Para ver sesiones que lockean:
+
+#onstat -ses
+
+
+Para matar sesiones, en este caso vemos con el comando previo que sesion la lockea:
+
+#onmode -z ID  
+
+
+Inactiva, pero online -Pone la DB en modo Quiescent, espera que todos los usuarios salgan de la DB. No permite nuevas conexiones al motor, las que existen las cierra en modo normal:
+
+#onmode -sy
+
+
+Nos movemos al siguiente log logico:
+
+#onmode -l
+
+
+Nos devuelve descripcion del nro de error que le pasamos:
+
+#finderr Nro-error  
+
+
+Pasa la DB llamada "Base" a modo transaccional UNBUFFERED:
+
+#ontape -s -L 0 -U Base
+
+
+Pasa la DB llamada "Base" a modo transaccional BUFFERED:
+
+#ontape -s -L 0 -B Base
+
+
+Pasa la DB llamada "Base" a modo NO TRANSACCIONAL, permite hacer consultas pero no modificaciones:
+
+#ontape -s -L 0 -N Base
+
+
+Para backups de Logical Logs:
+
+#ontape -a   
+
+
+Para ver si se backupean los Logical Logs:
+
+#onstat -l
+
+Crea export llamado Base.exp con datos de las tablas:
+
+#dbexport Base
+
+
+Importa de Base.exp el sql dentro:
+
+#dbimport Base
+
+
+Load:
+
+#echo "load from archivo.unl insert into tabla" | dbaccess base
+
+
+Bajar estructura de una tabla de una Base:
+
+#dbschema -t tabla -d base
+
+
+Unload base:
+
+#echo "unload " | dbaccess base
+
+
+Descargar a un archivo contenido de una tabla:
+
+# echo "UNLOAD TO 'nombre_archivo.unl' SELECT * from nombre_tabla | dbaccess nombre_db
